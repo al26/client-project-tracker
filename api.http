@@ -1,0 +1,164 @@
+@baseUrl = http://localhost:8000/api
+@token = {{login.response.body.data.token}}
+
+### Register a new user
+POST {{baseUrl}}/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+}
+
+### Login to get token
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "demo@example.com",
+    "password": "password"
+}
+
+### Get User Info
+GET {{baseUrl}}/user
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Logout
+POST {{baseUrl}}/logout
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Forgot Password
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "demo@example.com"
+}
+
+### Reset Password (get token from logs after forgot-password)
+POST {{baseUrl}}/reset-password
+Content-Type: application/json
+Accept: application/json
+
+{
+    "token": "YOUR_TOKEN_FROM_EMAIL",
+    "email": "demo@example.com",
+    "password": "newpassword123",
+    "password_confirmation": "newpassword123"
+}
+
+### Send Email Verification OTP & Magic Link
+POST {{baseUrl}}/email/verification-notification
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Resend Email Verification OTP
+POST {{baseUrl}}/email/verification-notification/resend
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "demo@example.com"
+}
+
+### Verify Email via 6-Character OTP
+POST {{baseUrl}}/email/verify
+Content-Type: application/json
+Accept: application/json
+
+{
+    "token": "A1B2C3"
+}
+
+### Verify Email via Magic Link Token
+POST {{baseUrl}}/email/verify-magic
+Content-Type: application/json
+Accept: application/json
+
+{
+    "token": "YOUR_MAGIC_LINK_TOKEN"
+}
+
+### Update Profile
+PUT {{baseUrl}}/user/profile-information
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Updated Name",
+    "email": "demo@example.com"
+}
+
+### Update Password
+PUT {{baseUrl}}/user/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "current_password": "password",
+    "password": "newpassword123",
+    "password_confirmation": "newpassword123"
+}
+
+### Get All Projects (with pagination and filters)
+GET {{baseUrl}}/projects?page=1&per_page=15&search=API&status=Planning&priority=High&sort_by=due_date&sort_direction=desc
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get All Projects (simple)
+GET {{baseUrl}}/projects
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Create a Project
+# @name createProject
+POST {{baseUrl}}/projects
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "client_name": "REST Client Corp",
+    "project_name": "API Integration Project",
+    "description": "Integration testing via .http file",
+    "status": "Planning",
+    "priority": "High",
+    "start_date": "2026-08-01",
+    "due_date": "2026-10-31"
+}
+
+### Export created project ID
+@projectId = {{createProject.response.body.data.id}}
+
+### Get a single Project
+GET {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Update the Project
+PUT {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "client_name": "REST Client Corp Updated",
+    "project_name": "API Integration Project Updated",
+    "status": "In Progress"
+}
+
+### Delete the Project
+DELETE {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{token}}
+Accept: application/json
