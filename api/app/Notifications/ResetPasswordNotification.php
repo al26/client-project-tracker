@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
 
-class CustomResetPasswordNotification extends BaseResetPassword implements ShouldQueue
+class ResetPasswordNotification extends BaseResetPassword implements ShouldQueue
 {
     /**
      * Build the mail representation of the notification.
