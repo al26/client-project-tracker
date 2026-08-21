@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\EmailVerificationToken;
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class VerifyEmailController extends Controller
 {
@@ -58,7 +58,9 @@ class VerifyEmailController extends Controller
             ->first();
 
         if (! $verificationToken) {
-            throw new Exception('Invalid or expired verification token.', 422);
+            throw ValidationException::withMessages([
+                'token' => 'Invalid or expired verification token.',
+            ]);
         }
 
         $user = $verificationToken->user;
@@ -108,7 +110,9 @@ class VerifyEmailController extends Controller
             ];
         }
 
-        throw new Exception('Invalid or expired verification token.', 422);
+        throw ValidationException::withMessages([
+            'token' => 'Invalid or expired verification token.',
+        ]);
     }
 
     /**

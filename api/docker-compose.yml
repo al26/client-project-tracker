@@ -1,0 +1,72 @@
+# api/docker-compose.yml
+# API-only deployment (api + db). No web/frontend.
+# Run: cd api && docker compose up -d --build
+
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: prod
+        container_name: ctp-api
+        restart: unless-stopped
+        ports:
+            - "8081:80"
+        env_file:
+            - .env
+        environment:
+            DB_CONNECTION: pgsql
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_DATABASE: ${DB_DATABASE:-client_project_tracker}
+            DB_USERNAME: ${DB_USERNAME:-laravel}
+            DB_PASSWORD: ${DB_PASSWORD:-laravel_password}
+            MAIL_MAILER: smtp
+            MAIL_HOST: mailpit
+            MAIL_PORT: 1025
+            MAIL_USERNAME: null
+            MAIL_PASSWORD: null
+            MAIL_ENCRYPTION: null
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - app-network
+
+    db:
+        image: postgres:15-alpine
+        container_name: ctp-db
+        restart: unless-stopped
+        env_file:
+            - .env
+        environment:
+            POSTGRES_USER: ${DB_USERNAME:-laravel}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-laravel_password}
+            POSTGRES_DB: ${DB_DATABASE:-client_project_tracker}
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        healthcheck:
+            test:
+                ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - app-network
+
+    mailpit:
+        image: axllent/mailpit:latest
+        container_name: ctp-mailpit
+        restart: unless-stopped
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+        networks:
+            - app-network
+
+volumes:
+    pgdata:
+
+networks:
+    app-network:
+        driver: bridge
