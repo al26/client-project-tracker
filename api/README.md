@@ -113,7 +113,7 @@ flowchart TD
     %% REGISTER COLUMN (left)
     A[POST /api/register] --> B[Create User]
     B --> C[Queue Welcome Email]
-    C --> D[Return {token, user}]
+    C --> D["Return {token, user}"]
     D --> E{email_verified?}
     
     %% LOGIN COLUMN (right, parallel)
@@ -130,7 +130,7 @@ flowchart TD
     M --> N{OTP/Link Valid?}
     N -->|No| O[Return Error]
     N -->|Yes| P[Mark Email Verified]
-    P --> Q[Return {token, user}]
+    P --> Q["Return {token, user}"]
     
     %% SUCCESS PATHS CONVERGE
     E -->|Yes| Q
