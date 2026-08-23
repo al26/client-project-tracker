@@ -8,191 +8,191 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ForgotPasswordRouteImport } from "./routes/forgot-password";
-import { Route as LoginRouteImport } from "./routes/login";
-import { Route as ProfileRouteImport } from "./routes/profile";
-import { Route as RegisterRouteImport } from "./routes/register";
-import { Route as ResetPasswordRouteImport } from "./routes/reset-password";
-import { Route as VerifyEmailRouteImport } from "./routes/verify-email";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 
 const IndexRoute = IndexRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-    id: "/forgot-password",
-    path: "/forgot-password",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
-    id: "/login",
-    path: "/login",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
-    id: "/profile",
-    path: "/profile",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
-    id: "/register",
-    path: "/register",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
-    id: "/reset-password",
-    path: "/reset-password",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
-    id: "/verify-email",
-    path: "/verify-email",
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-    "/": typeof IndexRoute;
-    "/forgot-password": typeof ForgotPasswordRoute;
-    "/login": typeof LoginRoute;
-    "/profile": typeof ProfileRoute;
-    "/register": typeof RegisterRoute;
-    "/reset-password": typeof ResetPasswordRoute;
-    "/verify-email": typeof VerifyEmailRoute;
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRoutesByTo {
-    "/": typeof IndexRoute;
-    "/forgot-password": typeof ForgotPasswordRoute;
-    "/login": typeof LoginRoute;
-    "/profile": typeof ProfileRoute;
-    "/register": typeof RegisterRoute;
-    "/reset-password": typeof ResetPasswordRoute;
-    "/verify-email": typeof VerifyEmailRoute;
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRoutesById {
-    __root__: typeof rootRouteImport;
-    "/": typeof IndexRoute;
-    "/forgot-password": typeof ForgotPasswordRoute;
-    "/login": typeof LoginRoute;
-    "/profile": typeof ProfileRoute;
-    "/register": typeof RegisterRoute;
-    "/reset-password": typeof ResetPasswordRoute;
-    "/verify-email": typeof VerifyEmailRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRouteTypes {
-    fileRoutesByFullPath: FileRoutesByFullPath;
-    fullPaths:
-        | "/"
-        | "/forgot-password"
-        | "/login"
-        | "/profile"
-        | "/register"
-        | "/reset-password"
-        | "/verify-email";
-    fileRoutesByTo: FileRoutesByTo;
-    to:
-        | "/"
-        | "/forgot-password"
-        | "/login"
-        | "/profile"
-        | "/register"
-        | "/reset-password"
-        | "/verify-email";
-    id:
-        | "__root__"
-        | "/"
-        | "/forgot-password"
-        | "/login"
-        | "/profile"
-        | "/register"
-        | "/reset-password"
-        | "/verify-email";
-    fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+  id:
+    | '__root__'
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-    IndexRoute: typeof IndexRoute;
-    ForgotPasswordRoute: typeof ForgotPasswordRoute;
-    LoginRoute: typeof LoginRoute;
-    ProfileRoute: typeof ProfileRoute;
-    RegisterRoute: typeof RegisterRoute;
-    ResetPasswordRoute: typeof ResetPasswordRoute;
-    VerifyEmailRoute: typeof VerifyEmailRoute;
+  IndexRoute: typeof IndexRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
-declare module "@tanstack/react-router" {
-    interface FileRoutesByPath {
-        "/": {
-            id: "/";
-            path: "/";
-            fullPath: "/";
-            preLoaderRoute: typeof IndexRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/forgot-password": {
-            id: "/forgot-password";
-            path: "/forgot-password";
-            fullPath: "/forgot-password";
-            preLoaderRoute: typeof ForgotPasswordRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/login": {
-            id: "/login";
-            path: "/login";
-            fullPath: "/login";
-            preLoaderRoute: typeof LoginRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/profile": {
-            id: "/profile";
-            path: "/profile";
-            fullPath: "/profile";
-            preLoaderRoute: typeof ProfileRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/register": {
-            id: "/register";
-            path: "/register";
-            fullPath: "/register";
-            preLoaderRoute: typeof RegisterRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/reset-password": {
-            id: "/reset-password";
-            path: "/reset-password";
-            fullPath: "/reset-password";
-            preLoaderRoute: typeof ResetPasswordRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        "/verify-email": {
-            id: "/verify-email";
-            path: "/verify-email";
-            fullPath: "/verify-email";
-            preLoaderRoute: typeof VerifyEmailRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-    IndexRoute: IndexRoute,
-    ForgotPasswordRoute: ForgotPasswordRoute,
-    LoginRoute: LoginRoute,
-    ProfileRoute: ProfileRoute,
-    RegisterRoute: RegisterRoute,
-    ResetPasswordRoute: ResetPasswordRoute,
-    VerifyEmailRoute: VerifyEmailRoute,
-};
+  IndexRoute: IndexRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
+}
 export const routeTree = rootRouteImport
-    ._addFileChildren(rootRouteChildren)
-    ._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx";
-import type { createStart } from "@tanstack/react-start";
-declare module "@tanstack/react-start" {
-    interface Register {
-        ssr: true;
-        router: Awaited<ReturnType<typeof getRouter>>;
-    }
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
