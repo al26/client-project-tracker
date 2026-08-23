@@ -1,3 +1,15 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+    "version": 2,
+    "public": true,
+    "cleanUrls": true,
+    "rewrites": [
+        {
+            "source": "/assets/(.*)",
+            "destination": "/assets/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/dist/server/server.js"
+        }
+    ]
 }
