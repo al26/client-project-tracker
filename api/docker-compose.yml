@@ -8,7 +8,7 @@ services:
             context: .
             dockerfile: Dockerfile
             target: prod
-        container_name: ctp-api
+        container_name: cpt-api-rest
         restart: unless-stopped
         ports:
             - "8081:80"
@@ -31,11 +31,11 @@ services:
             db:
                 condition: service_healthy
         networks:
-            - app-network
+            - cpt-api-network
 
     db:
         image: postgres:15-alpine
-        container_name: ctp-db
+        container_name: cpt-api-db
         restart: unless-stopped
         env_file:
             - .env
@@ -52,21 +52,21 @@ services:
             timeout: 5s
             retries: 5
         networks:
-            - app-network
+            - cpt-api-network
 
     mailpit:
         image: axllent/mailpit:latest
-        container_name: ctp-mailpit
+        container_name: cpt-api-mailpit
         restart: unless-stopped
         ports:
             - "1025:1025"
             - "8025:8025"
         networks:
-            - app-network
+            - cpt-api-network
 
 volumes:
     pgdata:
 
 networks:
-    app-network:
+    cpt-api-network:
         driver: bridge

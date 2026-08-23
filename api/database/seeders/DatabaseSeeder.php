@@ -17,14 +17,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Demo User',
-            'email' => 'demo@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        $user = User::firstOrCreate(
+            ['email' => 'demo@example.com'], // Kolom pencarian
+            [
+                'name' => 'Demo User',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+            ]
+        );
 
-        $this->call([
-            ProjectSeeder::class,
-        ]);
+        if ($user->wasRecentlyCreated) {
+            $this->call([
+                ProjectSeeder::class,
+            ]);
+        }
     }
 }

@@ -1,0 +1,116 @@
+# docker-compose.yml
+# Full stack deployment: API + Web + PostgreSQL + Mailpit
+# Run from repo root: docker compose up -d --build
+
+services:
+  proxy:
+    image: caddy:alpine
+    container_name: cpt-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - web
+    networks:
+      - cpt-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: prod
+    container_name: cpt-api
+    restart: unless-stopped
+    env_file:
+      - ./api/.env
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-client_project_tracker}
+      DB_USERNAME: ${DB_USERNAME:-laravel}
+      DB_PASSWORD: ${DB_PASSWORD:-laravel_password}
+      MAIL_MAILER: smtp
+      MAIL_HOST: mailpit
+      MAIL_PORT: 1025
+      MAIL_USERNAME: null
+      MAIL_PASSWORD: null
+      MAIL_ENCRYPTION: null
+      FRONTEND_URL: http://cpt.local
+      CORS_ALLOWED_ORIGINS: http://cpt.local,https://cpt.local
+      SANCTUM_STATEFUL_DOMAINS: cpt.local
+    depends_on:
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    networks:
+      - cpt-network
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      target: prod
+      args:
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-https://api.cpt.local}
+    container_name: cpt-web
+    restart: unless-stopped
+    env_file:
+      - ./web/.env
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - cpt-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://cpt.local/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  db:
+    image: postgres:15-alpine
+    container_name: cpt-db
+    restart: unless-stopped
+    env_file:
+      - ./api/.env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-laravel_password}
+      POSTGRES_DB: ${DB_DATABASE:-client_project_tracker}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cpt-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: cpt-mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - cpt-network
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  cpt-network:
+    driver: bridge

@@ -28,18 +28,27 @@ A server-rendered web app (**TanStack Start** + React) for managing client proje
 **Modes:**
 
 - **Mock mode** (default): leave `VITE_API_BASE_URL` empty. The app uses an in-memory mock backend with a demo user (`demo@example.com` / `password`). No backend required.
-- **API mode**: set `VITE_API_BASE_URL=http://localhost:8000` (or your production host) to connect to the Laravel API.
+- **API mode (Local)**: set `VITE_API_BASE_URL=http://localhost:8000` to connect to local Laravel API.
+- **API mode (Full Stack)**: set `VITE_API_BASE_URL=https://api.cpt.local` to connect via Caddy reverse proxy.
 
 ## Quick Start
 
 ### Docker (Recommended)
 
+**Standalone (this directory):**
 ```bash
 cd web
 cp .env.example .env
 docker compose up -d --build
 # App at http://localhost:3000
 ```
+
+**Full Stack (repo root):**
+```bash
+./start.sh
+# App at https://cpt.local
+```
+> Requires `/etc/hosts` entry: `127.0.0.1 cpt.local api.cpt.local mail.cpt.local`
 
 ### Local Development
 
@@ -63,7 +72,8 @@ yarn install && yarn dev
 bun install && bun run dev
 ```
 
-> App starts at `http://localhost:3000` for all methods.
+> App starts at `http://localhost:3000` for standalone/local development.
+> For full stack (Docker), access at `https://cpt.local`.
 
 ## Build & Distribution (Web Only)
 

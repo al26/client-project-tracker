@@ -43,7 +43,9 @@ cp .env.example .env
 | `MAIL_FROM_NAME` | From name | `Client Project Tracker` |
 | `QUEUE_CONNECTION` | Queue driver | `database` |
 
-> **Docker overrides:** When using `docker compose`, the `DB_*` values come from your `api/.env` and the `MAIL_*` values are set to Mailpit automatically (see [Email Sending](#email-sending)). These overrides apply only inside the compose stack.
+> **Docker overrides (API only):** When using `docker compose` from `api/`, the `DB_*` values come from your `api/.env` and the `MAIL_*` values are set to Mailpit automatically. These overrides apply only inside the compose stack.
+>
+> **Docker overrides (Full Stack):** When using `docker compose` from repo root, the `DB_*` values come from your `api/.env`, `MAIL_*` values are set to Mailpit, and additionally `FRONTEND_URL=https://cpt.local`, `CORS_ALLOWED_ORIGINS=https://cpt.local`, and `SANCTUM_STATEFUL_DOMAINS=cpt.local` are injected. These overrides apply only inside the compose stack.
 
 > **Tip:** For local development with a real inbox, use a service like [Mailtrap](https://mailtrap.io/) or [Mailpit](https://github.com/axllent/mailpit) and set `MAIL_MAILER=smtp` with their credentials.
 
@@ -70,7 +72,8 @@ cd api
 | Mode | API | Health | Mailpit UI | Database |
 | ---- | --- | ------ | ---------- | -------- |
 | Local | `http://localhost:8000` | `http://localhost:8000/health` | N/A (log) | SQLite file |
-| Docker | `http://localhost:8081` | `http://localhost:8081/health` | `http://localhost:8025` | PostgreSQL `localhost:5432` |
+| Docker (API only) | `http://localhost:8081` | `http://localhost:8081/health` | `http://localhost:8025` | PostgreSQL `localhost:5432` |
+| Docker (Full Stack) | `https://api.cpt.local` | `https://api.cpt.local/health` | `https://mail.cpt.local` | PostgreSQL (internal) |
 
 Stop local: `Ctrl+C` — stops both server and queue worker.  
 Stop Docker: `docker compose down`
@@ -91,11 +94,11 @@ All notifications are **queued** and require a running queue worker:
 - `MAIL_MAILER=log` (set in `.env`)
 - Emails written to `storage/logs/laravel.log`
 - Check the log file to inspect sent emails
-
 ### Docker
+
 - Mailpit runs automatically as a sidecar service
-- **Web UI:** `http://localhost:8025` — view all caught emails (HTML/text preview, headers, raw source)
-- **SMTP (host):** `localhost:1025` — send test mail from your machine if needed
+- **Web UI:** `https://mail.cpt.local` (via Caddy, full stack) or `http://localhost:8025` (direct, API only)
+- **SMTP (host):** `mailpit:1025` (internal) / `localhost:1025` (host)
 - The compose file injects these into the `api` service:
 ```env
 MAIL_MAILER=smtp

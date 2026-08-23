@@ -6,6 +6,12 @@ set -e
 
 cd "$(dirname "$0")"
 
+# Ensure .env exists
+if [ ! -f .env ]; then
+    cp .env.example .env
+    php artisan key:generate
+fi
+
 read -r -p "Use Docker (API + PostgreSQL + Mailpit)? [y/N] " -n 1 REPLY
 echo
 
@@ -17,12 +23,6 @@ fi
 # ==============================================================================
 # LOCAL ENVIRONMENT PATH (Executed if Docker option is skipped)
 # ==============================================================================
-
-# Ensure .env exists
-if [ ! -f .env ]; then
-    cp .env.example .env
-    php artisan key:generate
-fi
 
 # Run migrations
 php artisan migrate --force

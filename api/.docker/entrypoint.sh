@@ -21,6 +21,11 @@ fi
 # Run database migrations (non-fatal if DB isn't ready yet)
 php artisan migrate --force || true
 
+# seed data
+if ! grep -q '^APP_ENV=production' .env 2>/dev/null; then
+    php artisan db:seed --force || true
+fi
+
 # Cache config and views (route:cache skipped — web.php uses closures)
 php artisan config:cache || true
 php artisan view:cache || true

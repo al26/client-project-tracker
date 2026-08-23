@@ -1,0 +1,14 @@
+# Frontend (TanStack Start / Vite SSR)
+cpt.local {
+    reverse_proxy web:3000
+}
+
+# Backend (Laravel API)
+api.cpt.local {
+    reverse_proxy api:80
+}
+
+# Mailpit UI (Opsional via Domain)
+mail.cpt.local {
+    reverse_proxy mailpit:8025
+}

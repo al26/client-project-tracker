@@ -14,7 +14,7 @@ import { mockDb } from "./mock-db";
  * — every call below then hits the Laravel Sanctum API at `/api/projects`.
  * While it is empty, requests are served by the in-memory mock backend in `./mock-db`.
  */
-export const API_BASE_URL: string = import.meta.env["VITE_API_BASE_URL"] ?? "";
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export const USE_MOCK = API_BASE_URL.trim() === "";
 
