@@ -1,4 +1,4 @@
-import { createServer } from "node:http";
+import { createServer, Server } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -22,7 +22,7 @@ const MIME_TYPES = {
     ".ttf": "font/ttf",
 };
 
-createServer(async (req, res) => {
+const server = createServer(async (req, res) => {
     const url = new URL(
         req.url || "/",
         `http://${req.headers.host || "localhost"}`,
@@ -77,7 +77,11 @@ createServer(async (req, res) => {
         res.writeHead(500, { "Content-Type": "text/plain" });
         res.end("Internal Server Error");
     }
-}).listen(PORT, HOST, () => {
+});
+
+server.listen(PORT, HOST, () => {
     const displayHost = HOST === "0.0.0.0" ? "localhost" : HOST;
     console.log(`Web server running on http://${displayHost}:${PORT}`);
 });
+
+export default server;

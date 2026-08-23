@@ -20,10 +20,10 @@ A server-rendered web app (**TanStack Start** + React) for managing client proje
 
 ## Environment & Modes
 
-| Variable | Purpose | Default |
-| --- | --- | --- |
-| `VITE_API_BASE_URL` | Backend API origin | (empty = in-memory mock) |
-| `VITE_SHOW_SIGNOUT_DIALOG` | Show 3s confirmation dialog on logout | `false` |
+| Variable                   | Purpose                               | Default                  |
+| -------------------------- | ------------------------------------- | ------------------------ |
+| `VITE_API_BASE_URL`        | Backend API origin                    | (empty = in-memory mock) |
+| `VITE_SHOW_SIGNOUT_DIALOG` | Show 3s confirmation dialog on logout | `false`                  |
 
 **Modes:**
 
@@ -36,6 +36,7 @@ A server-rendered web app (**TanStack Start** + React) for managing client proje
 ### Docker (Recommended)
 
 **Standalone (this directory):**
+
 ```bash
 cd web
 cp .env.example .env
@@ -44,30 +45,36 @@ docker compose up -d --build
 ```
 
 **Full Stack (repo root):**
+
 ```bash
 ./start.sh
 # App at https://cpt.local
 ```
+
 > Requires `/etc/hosts` entry: `127.0.0.1 cpt.local api.cpt.local mail.cpt.local`
 
 ### Local Development
 
 **npm**
+
 ```bash
 npm install && npm run dev
 ```
 
 **pnpm**
+
 ```bash
 pnpm install && pnpm dev
 ```
 
 **yarn**
+
 ```bash
 yarn install && yarn dev
 ```
 
 **bun**
+
 ```bash
 bun install && bun run dev
 ```
@@ -86,6 +93,7 @@ docker compose build
 ```
 
 Outputs to `dist/`:
+
 - `dist/client/` → static assets
 - `dist/server/server.js` → SSR handler
 
