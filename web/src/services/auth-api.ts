@@ -352,7 +352,10 @@ export const authApi = {
             await delay();
             const current = getMockSession();
             if (!current) throw new AuthError("Not authenticated.", 401);
-            const updated: AuthUser = { ...current, email_verified_at: new Date().toISOString() };
+            const updated: AuthUser = {
+                ...current,
+                email_verified_at: new Date().toISOString(),
+            };
             setMockSession(updated);
             return updated;
         }
@@ -368,14 +371,20 @@ export const authApi = {
             await delay();
             const current = getMockSession();
             if (!current) throw new AuthError("Not authenticated.", 401);
-            const updated: AuthUser = { ...current, email_verified_at: new Date().toISOString() };
+            const updated: AuthUser = {
+                ...current,
+                email_verified_at: new Date().toISOString(),
+            };
             setMockSession(updated);
             return updated;
         }
-        const response = await call<{ data: AuthUser }>("/api/email/verify-magic", {
-            method: "POST",
-            body: { token },
-        });
+        const response = await call<{ data: AuthUser }>(
+            "/api/email/verify-magic",
+            {
+                method: "POST",
+                body: { token },
+            },
+        );
         return response.data;
     },
 

@@ -13,12 +13,9 @@ export const projectSchema = z
             .trim()
             .min(1, { message: "Project name is required" })
             .max(120, { message: "Project name must be under 120 characters" }),
-        description: z
-            .string()
-            .trim()
-            .max(1000, {
-                message: "Description must be under 1000 characters",
-            }),
+        description: z.string().trim().max(1000, {
+            message: "Description must be under 1000 characters",
+        }),
         status: z.enum(STATUSES, { message: "Select a valid status" }),
         priority: z.enum(PRIORITIES, { message: "Select a valid priority" }),
         start_date: z.string().min(1, { message: "Start date is required" }),

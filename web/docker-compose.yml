@@ -1,0 +1,34 @@
+# web/docker-compose.yml
+# Standalone web deployment (TanStack Start SSR)
+# Run: cd web && docker compose up -d --build
+# Access: http://localhost:3000
+
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: prod
+            args:
+                - VITE_API_BASE_URL=${VITE_API_BASE_URL:-}
+        container_name: ctp-web
+        restart: unless-stopped
+        ports:
+            - "3000:3000"
+        env_file:
+            - .env
+        environment:
+            - PORT=3000
+            - HOST=0.0.0.0
+        healthcheck:
+            test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        networks:
+            - web-network
+
+networks:
+    web-network:
+        driver: bridge

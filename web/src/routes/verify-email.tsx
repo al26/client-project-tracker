@@ -302,10 +302,14 @@ function VerifyEmailPage() {
                                             <Input
                                                 value={field.value}
                                                 onChange={(event) => {
-                                                    const next = event.target.value
-                                                        .toUpperCase()
-                                                        .replace(/\s/g, "")
-                                                        .slice(0, OTP_LENGTH);
+                                                    const next =
+                                                        event.target.value
+                                                            .toUpperCase()
+                                                            .replace(/\s/g, "")
+                                                            .slice(
+                                                                0,
+                                                                OTP_LENGTH,
+                                                            );
                                                     field.onChange(next);
                                                 }}
                                                 inputMode="text"
