@@ -78,9 +78,11 @@ Runs API + Web + PostgreSQL + Mailpit behind Caddy reverse proxy.
 See [Service URLs](#service-urls).
 
 > **Note:** For local development, add to `/etc/hosts`:
+>
 > ```
 > 127.0.0.1 cpt.local api.cpt.local mail.cpt.local
 > ```
+>
 > Caddy automatically provisions TLS certificates via its local CA.
 
 ### Backend API Only (Local)
@@ -120,22 +122,22 @@ Runs on `http://localhost:3000`. Uses mock API by default. See [`web/README.md`]
 
 ### Standalone (Direct Ports)
 
-| Mode | Web App | API | Mailpit |
-|------|---------|-----|---------|
-| API only (`cd api && docker compose up`) | — | http://localhost:8081 | http://localhost:8025 |
-| Web only (`cd web && docker compose up`) | http://localhost:3000 | — | — |
+| Mode                                     | Web App               | API                   | Mailpit               |
+| ---------------------------------------- | --------------------- | --------------------- | --------------------- |
+| API only (`cd api && docker compose up`) | —                     | http://localhost:8081 | http://localhost:8025 |
+| Web only (`cd web && docker compose up`) | http://localhost:3000 | —                     | —                     |
 
 ## Useful Commands (Full Stack)
 
-| Command | Description |
-|---------|-------------|
-| `./start.sh` | Start full stack |
-| `./start.sh --build` | Rebuild & start |
-| `./start.sh --logs web` | Frontend logs |
-| `./start.sh --logs api` | Backend logs |
-| `./start.sh --logs proxy` | Caddy proxy logs |
-| `./start.sh --down` | Stop all |
-| `docker compose down -v` | Stop + remove DB data |
+| Command                   | Description           |
+| ------------------------- | --------------------- |
+| `./start.sh`              | Start full stack      |
+| `./start.sh --build`      | Rebuild & start       |
+| `./start.sh --logs web`   | Frontend logs         |
+| `./start.sh --logs api`   | Backend logs          |
+| `./start.sh --logs proxy` | Caddy proxy logs      |
+| `./start.sh --down`       | Stop all              |
+| `docker compose down -v`  | Stop + remove DB data |
 
 > For per-service commands, see [`api/README.md`](api/README.md) and [`web/README.md`](web/README.md).
 
@@ -143,31 +145,31 @@ Runs on `http://localhost:3000`. Uses mock API by default. See [`web/README.md`]
 
 ### Backend (`api/.env`)
 
-| Variable | Purpose | Default (Full Stack) | Default (Local) |
-| -------- | ------- | -------------------- | --------------- |
-| `APP_URL` | API origin | `https://api.cpt.local` | `http://localhost:8000` |
-| `FRONTEND_URL` | Frontend origin (CORS, email links) | `https://cpt.local` | `http://localhost:3000` |
-| `CORS_ALLOWED_ORIGINS` | Allowed CORS origins | `https://cpt.local` | `http://localhost:3000` |
-| `SANCTUM_STATEFUL_DOMAINS` | Stateful domains for cookie auth | `cpt.local` | `localhost:3000` |
-| `DB_CONNECTION` | Database driver | `pgsql` | `sqlite` |
-| `DB_DATABASE` | DB name | `client_project_tracker` | `database/database.sqlite` |
-| `MAIL_MAILER` | Email driver | `smtp` (Mailpit) | `log` |
-| `QUEUE_CONNECTION` | Queue driver | `database` | `database` |
+| Variable                   | Purpose                             | Default (Full Stack)     | Default (Local)            |
+| -------------------------- | ----------------------------------- | ------------------------ | -------------------------- |
+| `APP_URL`                  | API origin                          | `https://api.cpt.local`  | `http://localhost:8000`    |
+| `FRONTEND_URL`             | Frontend origin (CORS, email links) | `https://cpt.local`      | `http://localhost:3000`    |
+| `CORS_ALLOWED_ORIGINS`     | Allowed CORS origins                | `https://cpt.local`      | `http://localhost:3000`    |
+| `SANCTUM_STATEFUL_DOMAINS` | Stateful domains for cookie auth    | `cpt.local`              | `localhost:3000`           |
+| `DB_CONNECTION`            | Database driver                     | `pgsql`                  | `sqlite`                   |
+| `DB_DATABASE`              | DB name                             | `client_project_tracker` | `database/database.sqlite` |
+| `MAIL_MAILER`              | Email driver                        | `smtp` (Mailpit)         | `log`                      |
+| `QUEUE_CONNECTION`         | Queue driver                        | `database`               | `database`                 |
 
 ### Frontend (`web/.env`)
 
-| Variable | Purpose | Default (Full Stack) | Default (Local) |
-| -------- | ------- | -------------------- | --------------- |
-| `VITE_API_BASE_URL` | Backend API origin | `https://api.cpt.local` | empty (mock mode) |
-| `VITE_SHOW_SIGNOUT_DIALOG` | Show logout confirmation | `false` | `false` |
+| Variable                   | Purpose                  | Default (Full Stack)    | Default (Local)   |
+| -------------------------- | ------------------------ | ----------------------- | ----------------- |
+| `VITE_API_BASE_URL`        | Backend API origin       | `https://api.cpt.local` | empty (mock mode) |
+| `VITE_SHOW_SIGNOUT_DIALOG` | Show logout confirmation | `false`                 | `false`           |
 
 #### Frontend Modes
 
-| Mode | Configuration | Description |
-| ---- | ------------- | ----------- |
-| **Mock** (default) | `VITE_API_BASE_URL` empty | In-memory mock backend, no API needed |
-| **API (Full Stack)** | `VITE_API_BASE_URL=https://api.cpt.local` | Connects to Laravel API via Caddy |
-| **API (Local)** | `VITE_API_BASE_URL=http://localhost:8000` | Connects to local Laravel API |
+| Mode                 | Configuration                             | Description                           |
+| -------------------- | ----------------------------------------- | ------------------------------------- |
+| **Mock** (default)   | `VITE_API_BASE_URL` empty                 | In-memory mock backend, no API needed |
+| **API (Full Stack)** | `VITE_API_BASE_URL=https://api.cpt.local` | Connects to Laravel API via Caddy     |
+| **API (Local)**      | `VITE_API_BASE_URL=http://localhost:8000` | Connects to local Laravel API         |
 
 ## Project Structure
 
@@ -205,9 +207,15 @@ vendor/bin/pest
 
 ## Documentation
 
-| Document | Location | Description |
-| -------- | -------- | ----------- |
-| API README | `api/README.md` | Local setup, auth flow, email, testing, API docs, env vars |
-| Web README | `web/README.md` | Local setup, routing, project structure, theming, Docker, build |
-| OpenAPI Spec | `api-spec.yaml` | Full API specification (OpenAPI 3.0) |
-| HTTP Examples | `api.http` | Ready-to-run requests (VS Code REST Client) |
+| Document      | Location        | Description                                                     |
+| ------------- | --------------- | --------------------------------------------------------------- |
+| API README    | `api/README.md` | Local setup, auth flow, email, testing, API docs, env vars      |
+| Web README    | `web/README.md` | Local setup, routing, project structure, theming, Docker, build |
+| OpenAPI Spec  | `api-spec.yaml` | Full API specification (OpenAPI 3.0)                            |
+| HTTP Examples | `api.http`      | Ready-to-run requests (VS Code REST Client)                     |
+
+---
+
+## Assumptions & Implementation Notes
+
+See [`ASSUMPTIONS.md`](ASSUMPTIONS.md) for a detailed comparison of [`REQUIREMENTS.md`](REQUIREMENTS.md) vs actual implementation, including decisions, trade-offs, and rationale for each area that extends beyond the base requirements.
